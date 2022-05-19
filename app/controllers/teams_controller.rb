@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_team, only: %i[show edit update destroy]
-
+  before_action :team_edit_block, only: %i[edit]
   def index
     @teams = Team.all
   end
@@ -55,5 +55,10 @@ class TeamsController < ApplicationController
 
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
+  end
+
+  def team_edit_block
+    url = Team.friendly.find(params[:id])
+    redirect_to team_url(url.id) unless current_user == url.owner
   end
 end
