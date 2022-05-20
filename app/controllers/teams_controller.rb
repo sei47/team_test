@@ -7,7 +7,10 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team.team_owner_change(@team, params[:new_owner]) if params[:owner_change].present?
+    if params[:owner_change].present? and @team.owner == current_user
+      @team.team_owner_change(@team, params[:new_owner])
+      @team.save
+    end
     @working_team = @team
     change_keep_team(current_user, @team)
   end
