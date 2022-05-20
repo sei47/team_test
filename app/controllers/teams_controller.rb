@@ -10,6 +10,7 @@ class TeamsController < ApplicationController
     if params[:owner_change].present? and @team.owner == current_user
       @team.team_owner_change(@team, params[:new_owner])
       @team.save
+      TeamMailer.change_leader_mail(@team.owner).deliver
     end
     @working_team = @team
     change_keep_team(current_user, @team)
