@@ -48,6 +48,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'letter_opener_web'
 end
 
 group :development do
